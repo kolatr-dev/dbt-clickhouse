@@ -22,10 +22,10 @@ def _dbt_clickhouse_version():
 
 
 package_name = 'dbt-clickhouse'
-package_version = _dbt_clickhouse_version()
+package_version = '1.5.0b1' #_dbt_clickhouse_version()
 description = '''The Clickhouse plugin for dbt (data build tool)'''
 
-dbt_version = '1.4.0'
+dbt_version = '1.5.0b1'
 dbt_minor = '.'.join(dbt_version.split('.')[0:2])
 
 if not package_version.startswith(dbt_minor):
