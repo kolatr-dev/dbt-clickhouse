@@ -54,7 +54,7 @@ setup(
         ]
     },
     install_requires=[
-        f'dbt-core>={dbt_version}',
+        'dbt-core @ git+https://github.com/dbt-labs/dbt-core@e53420c1d073dc81609ae7aa84cef6ee09650576#subdirectory=core',
         'clickhouse-connect>=0.6.22',
         'clickhouse-driver>=0.2.6',
         'setuptools>=0.69',
