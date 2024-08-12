@@ -1,4 +1,4 @@
-dbt-core @ git+https://github.com/dbt-labs/dbt-core@e53420c1d073dc81609ae7aa84cef6ee09650576#subdirectory=core
+dbt-core>=1.9.0
 dbt-adapters>=1.1.1
 dbt-tests-adapter>=1.8.0
 clickhouse-connect>=0.7.6

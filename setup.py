@@ -25,7 +25,7 @@ package_name = 'dbt-clickhouse'
 package_version = _dbt_clickhouse_version()
 description = '''The Clickhouse plugin for dbt (data build tool)'''
 
-dbt_version = '1.8.0'
+dbt_version = '1.9.0'
 dbt_minor = '.'.join(dbt_version.split('.')[0:2])
 
 if not package_version.startswith(dbt_minor):
@@ -54,7 +54,7 @@ setup(
         ]
     },
     install_requires=[
-        'dbt-core @ git+https://github.com/dbt-labs/dbt-core@e53420c1d073dc81609ae7aa84cef6ee09650576#subdirectory=core',
+        'dbt-core>=1.9.0',
         'clickhouse-connect>=0.6.22',
         'clickhouse-driver>=0.2.6',
         'setuptools>=0.69',
