@@ -36,11 +36,13 @@
   {{ run_hooks(pre_hooks, inside_transaction=True) }}
 
   {% if backup_relation is none %}
+    {{ log('No backup relation found') }}
     {{ log('Creating new materialized view ' + target_relation.name )}}
     {% call statement('main') -%}
       {{ clickhouse__get_create_materialized_view_as_sql(target_relation, sql) }}
     {%- endcall %}
   {% elif existing_relation.can_exchange %}
+    {{ log('Existing relation can exchange') }}
     {{ log('Replacing existing materialized view ' + target_relation.name) }}
     {% call statement('drop existing materialized view') %}
       drop view if exists {{ mv_relation }} {{ cluster_clause }}
@@ -56,10 +58,9 @@
         select 1
       {%- endcall %}
     {% endif %}
-    {% call statement('create new materialized view') %}
-      {{ clickhouse__create_mv_sql(mv_relation, existing_relation, cluster_clause, sql) }}
-    {% endcall %}
+    {{ clickhouse__create_mv_sql(mv_relation, existing_relation, cluster_clause, sql) }}
   {% else %}
+    {{ log('Existing relation cannot exchange') }}
     {{ log('Replacing existing materialized view ' + target_relation.name) }}
     {{ clickhouse__replace_mv(target_relation, existing_relation, intermediate_relation, backup_relation, sql) }}
   {% endif %}
@@ -100,9 +101,11 @@
 
 
 {% macro clickhouse__create_mv_sql(mv_relation, target_table, cluster_clause, sql)  -%}
-  create materialized view if not exists {{ mv_relation }} {{ cluster_clause }}
-  to {{ target_table }}
-  as {{ sql }}
+  {% call statement('create new materialized view') %}
+    create materialized view if not exists {{ mv_relation }} {{ cluster_clause }}
+    to {{ target_table }}
+    as {{ sql }}
+  {% endcall %}
 {%- endmacro %}
 
 
